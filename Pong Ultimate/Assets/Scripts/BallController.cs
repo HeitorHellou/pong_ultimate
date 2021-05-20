@@ -19,36 +19,36 @@ public class BallController : MonoBehaviour
     float dx = Random.Range(0, 2) == 0 ? -1 : 1; // Random x value to determine which side the ball will go
     float dy = Random.Range(0, 2) == 0 ? -1 : 1; // Where the ball will launch in the Y axis
 
-    rb.velocity = new Vector3(dx, 0.0f, dy) * speed; // Launching the ball
+    rb.velocity = new Vector3(-1, 0.0f, 0.0f) * speed; // Launching the ball
   }
 
   private void OnTriggerEnter(Collider other)
   {
-    //// Checking who scored the goal
-    //if (other.gameObject.tag == "Trigger P1")
-    //{
-    //  // Adding a point to player score
-    //  FindObjectOfType<GameSession>().ScorePointP2();
-    //  // Reseting both player positions
-    //  foreach (var x in FindObjectsOfType<PlayerController>())
-    //  {
-    //    x.SetPlayerPosition();
-    //  }
-    //}
-    //if (other.gameObject.tag == "Trigger P2")
-    //{
-    //  FindObjectOfType<GameSession>().ScorePointP1();
-    //  foreach (var x in FindObjectsOfType<PlayerController>())
-    //  {
-    //    x.SetPlayerPosition();
-    //  }
-    //}
-    //ResetBallPosition(); // Reseting ball position
-    //// Removing the object forces
-    //rb.velocity = Vector3.zero;
-    //rb.angularVelocity = Vector3.zero;
-    //// Relaunching the ball
-    //StartCoroutine("WaitLaunch");
+    // Checking who scored the goal
+    if (other.gameObject.tag == "Trigger P1")
+    {
+      // Adding a point to player score
+      FindObjectOfType<GameSession>().ScorePointP2();
+      // Reseting both player positions
+      foreach (var x in FindObjectsOfType<PlayerController>())
+      {
+        x.ResetPlayerPosition();
+      }
+    }
+    if (other.gameObject.tag == "Trigger P2")
+    {
+      FindObjectOfType<GameSession>().ScorePointP1();
+      foreach (var x in FindObjectsOfType<PlayerController>())
+      {
+        x.ResetPlayerPosition();
+      }
+    }
+    ResetBallPosition(); // Reseting ball position
+    // Removing the object forces
+    rb.velocity = Vector3.zero;
+    rb.angularVelocity = Vector3.zero;
+    // Relaunching the ball
+    StartCoroutine("WaitLaunch");
   }
 
   public void ResetBallPosition()

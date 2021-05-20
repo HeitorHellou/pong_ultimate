@@ -6,7 +6,13 @@ public class PlayerController : MonoBehaviour
 {
   [SerializeField] float speed; // Paddle spped - can change on editor
 
-  float yMin = -1f, yMax = 2f; // Minimum and maximum value in which the player can transverse - Y axis
+  private Vector3 screenBounds;
+  private float objWidth, objHeight;
+
+  private void Start()
+  {
+    screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 2));
+  }
 
   private void FixedUpdate()
   {
@@ -27,9 +33,13 @@ public class PlayerController : MonoBehaviour
   // Checking the limits in which the player can move
   public void CheckBoundaries()
   {
-    if (transform.position.y < yMin)
-      transform.position = new Vector3(-8.2f, yMin, 0.0f);
-    if (transform.position.y > yMax)
-      transform.position = new Vector3(-8.2f, yMax, 0.0f);
+    Vector3 viewPos = transform.position;
+    viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1 + objHeight, screenBounds.y - objHeight);
+    transform.position = new Vector3(-8.2f, Mathf.Clamp(viewPos.y, screenBounds.y * -1 + transform.lossyScale.y + 1, screenBounds.y - transform.lossyScale.y + 1), 2);
+  }
+
+  public void ResetPlayerPosition()
+  {
+    transform.position = new Vector3(-8.2f, 1, 2);
   }
 }
