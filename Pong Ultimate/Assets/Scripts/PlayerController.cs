@@ -42,11 +42,17 @@ public class PlayerController : MonoBehaviour
   {
     Vector3 viewPos = transform.position;
     viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1 + objHeight, screenBounds.y - objHeight);
-    transform.position = new Vector3(-8.2f, Mathf.Clamp(viewPos.y, screenBounds.y * -1 + transform.lossyScale.y + 1, screenBounds.y - transform.lossyScale.y + 1), 2);
+    if (gameObject.tag == "Player")
+      transform.position = new Vector3(-8.2f, Mathf.Clamp(viewPos.y, screenBounds.y * -1 + transform.lossyScale.y + 1, screenBounds.y - transform.lossyScale.y + 1), 2);
+    if (gameObject.tag == "Player 2")
+      transform.position = new Vector3(8.2f, Mathf.Clamp(viewPos.y, screenBounds.y * -1 + transform.lossyScale.y + 1, screenBounds.y - transform.lossyScale.y + 1), 2);
   }
 
   public void ResetPlayerPosition()
   {
-    transform.position = new Vector3(-8.2f, 1, 2);
+    if (gameObject.tag == "Player")
+      transform.position = new Vector3(-8.2f, 1, 2);
+    if (gameObject.tag == "Player 2")
+      transform.position = new Vector3(8.2f, 1, 2);
   }
 }

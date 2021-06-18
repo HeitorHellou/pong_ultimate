@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Trigger P1
   - Trigger P2
+  - Player 2
+  - North Wall
+  - South Wall
   layers:
   - Default
   - TransparentFX

@@ -19,7 +19,7 @@ public class BallController : MonoBehaviour
     float dx = Random.Range(0, 2) == 0 ? -1 : 1; // Random x value to determine which side the ball will go
     float dy = Random.Range(0, 2) == 0 ? -1 : 1; // Where the ball will launch in the Y axis
 
-    rb.velocity = new Vector3(-1, 0.0f, 0.0f) * speed; // Launching the ball
+    rb.velocity = new Vector3(dx, dy, 0.0f) * speed; // Launching the ball
   }
 
   private void OnTriggerEnter(Collider other)
