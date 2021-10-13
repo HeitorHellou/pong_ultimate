@@ -7,9 +7,9 @@ public class PlayerController : MonoBehaviour
 {
   [SerializeField] float speed; // Paddle spped - can change on editor
 
-  private Vector3 screenBounds;
-  private float objHeight;
-  private float moveY;
+  private Vector3 screenBounds; // Area in which the player can move
+  private float objHeight; // objHeight - y size
+  private float moveY; // stores the y movement of the play input - pong can only move on vertical
 
   private void Start()
   {

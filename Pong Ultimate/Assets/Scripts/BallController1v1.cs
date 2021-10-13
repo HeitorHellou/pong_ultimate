@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallController : MonoBehaviour
+public class BallController1v1 : MonoBehaviour
 {
   [SerializeField] float speed; // ball speed
+
+  public Vector3 ballDir = Vector3.left;
 
   Rigidbody rb;
 
@@ -38,18 +40,14 @@ public class BallController : MonoBehaviour
       // Adding a point to player score
       FindObjectOfType<GameSession>().ScorePointP2();
       // Reseting both player positions
-      foreach (var x in FindObjectsOfType<PlayerController>())
-      {
-        x.ResetPlayerPosition();
-      }
+      FindObjectOfType<PlayerController>().ResetPlayerPosition();
+      FindObjectOfType<AIController>().ResetAIPosition();
     }
     if (other.gameObject.tag == "Trigger P2")
     {
       FindObjectOfType<GameSession>().ScorePointP1();
-      foreach (var x in FindObjectsOfType<PlayerController>())
-      {
-        x.ResetPlayerPosition();
-      }
+      FindObjectOfType<PlayerController>().ResetPlayerPosition();
+      FindObjectOfType<AIController>().ResetAIPosition();
     }
     ResetBallPosition(); // Reseting ball position
     // Removing the object forces
@@ -67,10 +65,17 @@ public class BallController : MonoBehaviour
   // Checking where the ball collide with the player paddle
   public void OnCollisionEnter(Collision collision)
   {
-    if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player 2"))
+    if (collision.gameObject.CompareTag("Player"))
     {
       //ChangeBallBounce(Vector3.Reflect(rb.velocity.normalized, collision.contacts[0].normal), collision.GetContact(0).point.y - collision.transform.position.y);
       ChangeBallBounce(collision.contacts[0].normal, collision.GetContact(0).point.y - collision.transform.position.y);
+      ballDir = Vector3.right;
+    }
+    if ( collision.gameObject.CompareTag("A.I."))
+    {
+      //ChangeBallBounce(Vector3.Reflect(rb.velocity.normalized, collision.contacts[0].normal), collision.GetContact(0).point.y - collision.transform.position.y);
+      ChangeBallBounce(collision.contacts[0].normal, collision.GetContact(0).point.y - collision.transform.position.y);
+      ballDir = Vector3.left;
     }
   }
 
@@ -93,11 +98,11 @@ public class BallController : MonoBehaviour
     else if (y < -0.1)
     {
       if (y > -0.483)
-        direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y -0.5f, bounceDirection.z), 0.3f);
+        direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y - 0.5f, bounceDirection.z), 0.3f);
       else if (y > -0.866)
-        direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y -1f, bounceDirection.z), 0.3f);
+        direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y - 1f, bounceDirection.z), 0.3f);
       else
-        direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y -2f, bounceDirection.z), 0.3f);
+        direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y - 2f, bounceDirection.z), 0.3f);
     }
     else
       direction = Vector3.Lerp(bounceDirection, new Vector3(bounceDirection.x, bounceDirection.y, bounceDirection.z), 0.3f);

@@ -9,6 +9,8 @@ TagManager:
   - Player 2
   - North Wall
   - South Wall
+  - A.I.
+  - Ball
   layers:
   - Default
   - TransparentFX
